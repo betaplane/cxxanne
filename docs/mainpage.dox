@@ -33,4 +33,12 @@ int main(int argc, char* argv[]) {
   file.vars();
 }
 \endcode
+
+Python extension
+----------------
+The python extension is compiled by executing
+\code{.py}
+python setup.py build_ext --inplace
+\endcode
+The library paths are currently hardcoded in.
 */

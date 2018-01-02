@@ -7,7 +7,8 @@
             "netblitz_impl.cpp"
         ],
         "extra_compile_args": [
-            "-std=c++0x"
+            "-std=c++0x",
+            "-Wl,-rpath,/sata1_ceazalabs/arno/HPC/uvHome/code/cxx"
         ],
         "include_dirs": [
             "/usr/local/include/",
@@ -1056,6 +1057,8 @@ static PyObject *__pyx_builtin_TypeError;
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "name";
 static const char __pyx_k_test[] = "__test__";
+static const char __pyx_k_utf_8[] = "utf-8";
+static const char __pyx_k_encode[] = "encode";
 static const char __pyx_k_name_2[] = "__name__";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_getstate[] = "__getstate__";
@@ -1068,6 +1071,7 @@ static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_n_s_cline_in_traceback;
+static PyObject *__pyx_n_s_encode;
 static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
@@ -1079,6 +1083,7 @@ static PyObject *__pyx_n_s_reduce_ex;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_n_s_test;
+static PyObject *__pyx_kp_s_utf_8;
 static int __pyx_pf_8netblitz_4File___cinit__(struct __pyx_obj_8netblitz_File *__pyx_v_self, PyObject *__pyx_v_name); /* proto */
 static void __pyx_pf_8netblitz_4File_2__dealloc__(struct __pyx_obj_8netblitz_File *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8netblitz_4File_4var(struct __pyx_obj_8netblitz_File *__pyx_v_self); /* proto */
@@ -1087,12 +1092,13 @@ static PyObject *__pyx_pf_8netblitz_4File_8__setstate_cython__(CYTHON_UNUSED str
 static PyObject *__pyx_tp_new_8netblitz_File(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
+static PyObject *__pyx_tuple__3;
 
 /* "netblitz.pyx":12
  * cdef class File:
  *      cdef nbFile* cFile
  *      def __cinit__(self, name):             # <<<<<<<<<<<<<<
- *          self.cFile = new nbFile(name)
+ *          self.cFile = new nbFile(<string>name.encode('utf-8'))
  * 
  */
 
@@ -1149,31 +1155,39 @@ static int __pyx_pw_8netblitz_4File_1__cinit__(PyObject *__pyx_v_self, PyObject 
 static int __pyx_pf_8netblitz_4File___cinit__(struct __pyx_obj_8netblitz_File *__pyx_v_self, PyObject *__pyx_v_name) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  std::string __pyx_t_1;
-  nbFile *__pyx_t_2;
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  std::string __pyx_t_3;
+  nbFile *__pyx_t_4;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
   /* "netblitz.pyx":13
  *      cdef nbFile* cFile
  *      def __cinit__(self, name):
- *          self.cFile = new nbFile(name)             # <<<<<<<<<<<<<<
+ *          self.cFile = new nbFile(<string>name.encode('utf-8'))             # <<<<<<<<<<<<<<
  * 
  *      def __dealloc__(self):
  */
-  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_name); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 13, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_name, __pyx_n_s_encode); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 13, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 13, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = __pyx_convert_string_from_py_std__in_string(__pyx_t_2); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 13, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   try {
-    __pyx_t_2 = new nbFile(__pyx_t_1);
+    __pyx_t_4 = new nbFile(((std::string)__pyx_t_3));
   } catch(...) {
     __Pyx_CppExn2PyErr();
     __PYX_ERR(1, 13, __pyx_L1_error)
   }
-  __pyx_v_self->cFile = __pyx_t_2;
+  __pyx_v_self->cFile = __pyx_t_4;
 
   /* "netblitz.pyx":12
  * cdef class File:
  *      cdef nbFile* cFile
  *      def __cinit__(self, name):             # <<<<<<<<<<<<<<
- *          self.cFile = new nbFile(name)
+ *          self.cFile = new nbFile(<string>name.encode('utf-8'))
  * 
  */
 
@@ -1181,6 +1195,8 @@ static int __pyx_pf_8netblitz_4File___cinit__(struct __pyx_obj_8netblitz_File *_
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_AddTraceback("netblitz.File.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
@@ -1189,7 +1205,7 @@ static int __pyx_pf_8netblitz_4File___cinit__(struct __pyx_obj_8netblitz_File *_
 }
 
 /* "netblitz.pyx":15
- *          self.cFile = new nbFile(name)
+ *          self.cFile = new nbFile(<string>name.encode('utf-8'))
  * 
  *      def __dealloc__(self):             # <<<<<<<<<<<<<<
  *          del self.cFile
@@ -1221,7 +1237,7 @@ static void __pyx_pf_8netblitz_4File_2__dealloc__(struct __pyx_obj_8netblitz_Fil
   delete __pyx_v_self->cFile;
 
   /* "netblitz.pyx":15
- *          self.cFile = new nbFile(name)
+ *          self.cFile = new nbFile(<string>name.encode('utf-8'))
  * 
  *      def __dealloc__(self):             # <<<<<<<<<<<<<<
  *          del self.cFile
@@ -1309,7 +1325,7 @@ static PyObject *__pyx_pf_8netblitz_4File_6__reduce_cython__(CYTHON_UNUSED struc
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -1362,7 +1378,7 @@ static PyObject *__pyx_pf_8netblitz_4File_8__setstate_cython__(CYTHON_UNUSED str
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -1574,6 +1590,7 @@ static struct PyModuleDef __pyx_moduledef = {
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
+  {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
@@ -1585,6 +1602,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
+  {&__pyx_kp_s_utf_8, __pyx_k_utf_8, sizeof(__pyx_k_utf_8), 0, 0, 1, 0},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
@@ -1598,24 +1616,35 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
+  /* "netblitz.pyx":13
+ *      cdef nbFile* cFile
+ *      def __cinit__(self, name):
+ *          self.cFile = new nbFile(<string>name.encode('utf-8'))             # <<<<<<<<<<<<<<
+ * 
+ *      def __dealloc__(self):
+ */
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_utf_8); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 13, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple_);
+  __Pyx_GIVEREF(__pyx_tuple_);
+
   /* "(tree fragment)":2
  * def __reduce_cython__(self):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple_);
-  __Pyx_GIVEREF(__pyx_tuple_);
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__2);
+  __Pyx_GIVEREF(__pyx_tuple__2);
 
   /* "(tree fragment)":4
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__2);
-  __Pyx_GIVEREF(__pyx_tuple__2);
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__3);
+  __Pyx_GIVEREF(__pyx_tuple__3);
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;

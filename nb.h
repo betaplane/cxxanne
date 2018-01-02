@@ -33,9 +33,10 @@ class Var
 {
 	protected:
 	netCDF::NcVar var;
-// 	blitz::TinyVector<int, n-1> shape;
-	std::vector<size_t> start, count;
+	std::vector<size_t> start;
+  std::vector<size_t> count;
 	std::vector<int> ndims;
+  std::vector<int> non_squeeze;
 	size_t _reclen;
 	int _recdim;
 	void error_loc(int t,int y,int x, err_vec &err)
@@ -60,11 +61,13 @@ class Var
 			} else {
 				count[i] = dims[i].getSize();
 				ndims.push_back(i);
+        if (count[i] > 1) non_squeeze.push_back(i);
 			}
 		}
 	};
 
 	size_t reclen() { return _reclen; }
+  
   blitz::TinyVector<size_t, n> shape() {
     blitz::TinyVector<size_t, n> c(count.data());
     if (_reclen != 0)
@@ -83,7 +86,7 @@ class Var
      Returns an empty blitz::Array with the same shape as the underlying variable, but with the record dimension removed.
    */
 	template<int m=n-1>
-	blitz::Array<T, m> array()
+	blitz::Array<T, m> time_slice()
 	{
 		blitz::TinyVector<int,m> s;
 		for (int i=0; i<m; ++i) s[i] = count[ndims[i]];
@@ -95,6 +98,12 @@ class Var
 		var.getVar(start, count, arr.data());
 		++start[0];
 	};
+
+  blitz::Array<T, 1> space_slice()
+  {
+    return blitz::Array<T, 1>(_reclen);
+  }
+
 	// see in nb.cpp for instantiation of template
 	dim_vec copy_dims(netCDF::NcFile*, const rpl_map&, const netCDF::NcVar *ul = NULL);
 	dim_vec copy_dims(netCDF::NcFile*, const str_vec&, const netCDF::NcVar *ul = NULL);

@@ -10,7 +10,7 @@ cdef extern from "netblitz_impl.cpp":
 cdef class File:
      cdef nbFile* cFile
      def __cinit__(self, name):
-         self.cFile = new nbFile(name)
+         self.cFile = new nbFile(<string>name.encode('utf-8'))
 
      def __dealloc__(self):
          del self.cFile
